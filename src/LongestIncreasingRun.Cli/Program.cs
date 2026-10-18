@@ -5,7 +5,7 @@ using LongestIncreasingRun;
 if (args.Length > 1)
 {
     Console.Error.WriteLine("Usage: LongestIncreasingRun.Cli [sequence]");
-    Console.Error.WriteLine("Omit the sequence to be prompted for strings. An empty line exits.");
+    Console.Error.WriteLine("Omit the sequence to be prompted for strings.");
     return 1;
 }
 
@@ -19,7 +19,7 @@ while (true)
 {
     Console.Error.Write("Enter the string: ");
     string? line = Console.ReadLine();
-    if (string.IsNullOrEmpty(line))
+    if (line is null)
     {
         return 0;
     }

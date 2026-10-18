@@ -19,20 +19,20 @@ namespace LongestIncreasingRun;
 /// The pass is O(n) in time. Parsing stores the integers, which is O(n) space.
 /// The search itself keeps only a handful of indexes.
 ///
-/// A token that is not an invariant-culture integer is rejected. <see cref="Find"/>
-/// then returns <see cref="InvalidInputMessage"/> instead of throwing.
+/// An empty string, or a token that is not an invariant-culture integer, is rejected.
+/// <see cref="Find"/> then returns <see cref="InvalidInputMessage"/> instead of throwing.
 /// </remarks>
 public static class LongestIncreasingRunFinder
 {
     /// <summary>
-    /// Returned when the input contains a token that is not an integer.
+    /// Returned when the input is empty or contains a token that is not an integer.
     /// </summary>
     public const string InvalidInputMessage = "The input string is not correct.";
 
     /// <summary>
     /// Returns the earliest longest strictly increasing run as one
     /// space-separated string. A single value has no separator.
-    /// A token that is not an integer returns <see cref="InvalidInputMessage"/>.
+    /// An empty string, or a token that is not an integer, returns <see cref="InvalidInputMessage"/>.
     /// </summary>
     /// <param name="input">
     /// Integers separated by a single space, for example <c>6 1 5 9 2</c>.
@@ -57,7 +57,7 @@ public static class LongestIncreasingRunFinder
         if (input.Length == 0)
         {
             values = [];
-            return true;
+            return false;
         }
 
         string[] tokens = input.Split(' ');
@@ -75,11 +75,6 @@ public static class LongestIncreasingRunFinder
 
     private static Run SelectEarliestLongestRun(int[] values)
     {
-        if (values.Length == 0)
-        {
-            return new Run(0, 0);
-        }
-
         // A single value is a run of length 1, so the best run starts there
         // until a longer one is found.
         int bestStart = 0;
@@ -117,11 +112,6 @@ public static class LongestIncreasingRunFinder
 
     private static string Format(int[] values, Run run)
     {
-        if (run.Length == 0)
-        {
-            return string.Empty;
-        }
-
         var builder = new StringBuilder();
         int end = run.Start + run.Length;
         for (int index = run.Start; index < end; index++)

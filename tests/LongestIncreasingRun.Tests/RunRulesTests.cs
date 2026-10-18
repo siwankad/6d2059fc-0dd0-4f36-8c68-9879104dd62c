@@ -72,9 +72,9 @@ public sealed class RunRulesTests
     }
 
     [Fact]
-    public void EmptyInputReturnsAnEmptyString()
+    public void EmptyInputIsRejectedWithAMessage()
     {
-        Assert.Equal(string.Empty, LongestIncreasingRunFinder.Find(string.Empty));
+        Assert.Equal(LongestIncreasingRunFinder.InvalidInputMessage, LongestIncreasingRunFinder.Find(string.Empty));
     }
 
     [Fact]
