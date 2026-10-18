@@ -24,6 +24,14 @@ while (true)
         return 0;
     }
 
-    Console.WriteLine("Longest increasing subsequence is: " + LongestIncreasingRunFinder.Find(line));
+    string result = LongestIncreasingRunFinder.Find(line);
+    if (result == LongestIncreasingRunFinder.InvalidInputMessage)
+    {
+        Console.WriteLine(result);
+    }
+    else
+    {
+        Console.WriteLine("Longest increasing subsequence is: " + result);
+    }
     Console.WriteLine("\n");
 }

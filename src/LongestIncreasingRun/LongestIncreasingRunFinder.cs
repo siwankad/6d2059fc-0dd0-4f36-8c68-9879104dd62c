@@ -18,12 +18,21 @@ namespace LongestIncreasingRun;
 ///
 /// The pass is O(n) in time. Parsing stores the integers, which is O(n) space.
 /// The search itself keeps only a handful of indexes.
+///
+/// A token that is not an invariant-culture integer is rejected. <see cref="Find"/>
+/// then returns <see cref="InvalidInputMessage"/> instead of throwing.
 /// </remarks>
 public static class LongestIncreasingRunFinder
 {
     /// <summary>
+    /// Returned when the input contains a token that is not an integer.
+    /// </summary>
+    public const string InvalidInputMessage = "The input string is not correct.";
+
+    /// <summary>
     /// Returns the earliest longest strictly increasing run as one
     /// space-separated string. A single value has no separator.
+    /// A token that is not an integer returns <see cref="InvalidInputMessage"/>.
     /// </summary>
     /// <param name="input">
     /// Integers separated by a single space, for example <c>6 1 5 9 2</c>.
@@ -32,28 +41,36 @@ public static class LongestIncreasingRunFinder
     {
         ArgumentNullException.ThrowIfNull(input);
 
-        int[] values = Parse(input);
+        if (!TryParse(input, out int[] values))
+        {
+            return InvalidInputMessage;
+        }
+
         Run run = SelectEarliestLongestRun(values);
         return Format(values, run);
     }
 
     private readonly record struct Run(int Start, int Length);
 
-    private static int[] Parse(string input)
+    private static bool TryParse(string input, out int[] values)
     {
         if (input.Length == 0)
         {
-            return [];
+            values = [];
+            return true;
         }
 
         string[] tokens = input.Split(' ');
-        var values = new int[tokens.Length];
+        values = new int[tokens.Length];
         for (int index = 0; index < tokens.Length; index++)
         {
-            values[index] = int.Parse(tokens[index], CultureInfo.InvariantCulture);
+            if (!int.TryParse(tokens[index], NumberStyles.Integer, CultureInfo.InvariantCulture, out values[index]))
+            {
+                return false;
+            }
         }
 
-        return values;
+        return true;
     }
 
     private static Run SelectEarliestLongestRun(int[] values)

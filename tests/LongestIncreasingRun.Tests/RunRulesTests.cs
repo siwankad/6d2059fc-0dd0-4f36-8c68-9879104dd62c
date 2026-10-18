@@ -84,6 +84,24 @@ public sealed class RunRulesTests
     }
 
     [Fact]
+    public void LettersAreRejectedWithAMessage()
+    {
+        Assert.Equal(LongestIncreasingRunFinder.InvalidInputMessage, LongestIncreasingRunFinder.Find("abc"));
+    }
+
+    [Fact]
+    public void ALetterAmongNumbersIsRejectedWithAMessage()
+    {
+        Assert.Equal(LongestIncreasingRunFinder.InvalidInputMessage, LongestIncreasingRunFinder.Find("6 1 a 9"));
+    }
+
+    [Fact]
+    public void AValueOutsideInt32IsRejectedWithAMessage()
+    {
+        Assert.Equal(LongestIncreasingRunFinder.InvalidInputMessage, LongestIncreasingRunFinder.Find("6 9999999999 2"));
+    }
+
+    [Fact]
     public void LinearScanMatchesABruteForceScan()
     {
         var random = new Random(20261017);
