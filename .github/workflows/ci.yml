@@ -1,0 +1,33 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Restore
+        run: dotnet restore max-run.slnx
+
+      - name: Lint
+        run: dotnet format max-run.slnx --verify-no-changes --no-restore
+
+      - name: Test with coverage
+        run: dotnet test max-run.slnx -c Release --no-restore --settings coverage.runsettings --collect:"XPlat Code Coverage" --results-directory ./coverage
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage
+          if-no-files-found: error

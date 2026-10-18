@@ -1,6 +1,6 @@
 # Longest strictly increasing run
 
-A C# function on .NET 10. It takes one string of integers separated by single spaces and returns the earliest longest strictly increasing run.
+A C# function on .NET 9. It takes one string of integers separated by single spaces and returns the earliest longest strictly increasing run.
 
 Start with `src/LongestIncreasingRun/LongestIncreasingRunFinder.cs`, method `Find`.
 
@@ -62,13 +62,13 @@ The result is `2 4 6`.
 | `src/LongestIncreasingRun.Cli` | Thin console wrapper, used by the container |
 | `tests/LongestIncreasingRun.Tests/RunRulesTests.cs` | The rules, one readable case at a time, plus a slow scan used as an oracle |
 | `tests/LongestIncreasingRun.Tests/AcceptanceFixtureTests.cs` | AT-01 through AT-11 and RC-01 through RC-08 |
-| `Downloads/acceptance-fixtures.json` | The exact inputs, expected strings, and SHA-256 digests |
+| `Documents/acceptance-fixtures.json` | The exact inputs, expected strings, and SHA-256 digests |
 
 `Find` takes one string and needs no second argument. Supporting parsing and formatting stay private.
 
 ## Verify
 
-Install the .NET SDK 10. The repository pins SDK `10.0.402` in `global.json` and allows a newer 10.x SDK.
+Install the .NET SDK 9. The repository pins SDK `9.0.319` in `global.json` and allows a newer 9.x SDK.
 
 From the repository root:
 
@@ -110,7 +110,7 @@ A clean tree prints that no files were formatted and exits 0.
 
 ## Docker
 
-The SDK image is `mcr.microsoft.com/dotnet/sdk:10.0`. The runtime image is `mcr.microsoft.com/dotnet/runtime:10.0`.
+The SDK image is `mcr.microsoft.com/dotnet/sdk:9.0`. The runtime image is `mcr.microsoft.com/dotnet/runtime:9.0`.
 
 Run the unit tests while building the test stage:
 
@@ -129,8 +129,8 @@ That prints `2 4 6`.
 
 ## Continuous integration
 
-`.github/workflows/ci.yml` runs on every push, including a push to the default branch. It restores, runs `dotnet format --verify-no-changes`, runs the unit tests with coverage, and uploads the coverage directory.
+`.github/workflows/ci.yml` runs on every push and pull request. It restores, runs `dotnet format --verify-no-changes`, runs the unit tests with coverage, and uploads the coverage directory.
 
 ## Requirements baseline
 
-The exercise brief is `source/code-test.md`. The acceptance baseline, with the pass and fail criteria, is `Downloads/Longest-Increasing-Subsequence-Requirements.pdf`. The fixture file beside that PDF is the file the tests load.
+The exercise brief is `source/code-test.md`. The acceptance baseline, with the pass and fail criteria, is `Documents/Longest-Increasing-Subsequence-Requirements.pdf`. The fixture file beside that PDF is the file the tests load.

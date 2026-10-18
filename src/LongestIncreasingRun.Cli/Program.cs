@@ -1,15 +1,29 @@
+using System;
+
 using LongestIncreasingRun;
 
 if (args.Length > 1)
 {
     Console.Error.WriteLine("Usage: LongestIncreasingRun.Cli [sequence]");
-    Console.Error.WriteLine("Omit the sequence to read it from standard input.");
+    Console.Error.WriteLine("Omit the sequence to be prompted for strings. An empty line exits.");
     return 1;
 }
 
-string input = args.Length == 1
-    ? args[0]
-    : Console.In.ReadToEnd().TrimEnd('\r', '\n');
+if (args.Length == 1)
+{
+    Console.WriteLine(LongestIncreasingRunFinder.Find(args[0]));
+    return 0;
+}
 
-Console.WriteLine(LongestIncreasingRunFinder.Find(input));
-return 0;
+while (true)
+{
+    Console.Error.Write("Enter the string: ");
+    string? line = Console.ReadLine();
+    if (string.IsNullOrEmpty(line))
+    {
+        return 0;
+    }
+
+    Console.WriteLine("Longest increasing subsequence is: " + LongestIncreasingRunFinder.Find(line));
+    Console.WriteLine("\n");
+}
